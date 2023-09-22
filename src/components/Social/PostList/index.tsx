@@ -16,7 +16,7 @@ import {
   Image,
   TouchableWithoutFeedback,
   type StyleProp,
-  type  ImageStyle,
+  type ImageStyle,
   Modal,
   Pressable,
   Animated,
@@ -528,7 +528,7 @@ export default function PostList({
                 <Text style={styles.headerText}>{user?.displayName}</Text>
               </TouchableOpacity>
 
-              {communityName && (
+              {communityName ? (
                 <>
                   <SvgXml
                     style={styles.arrow}
@@ -541,7 +541,7 @@ export default function PostList({
                     <Text style={styles.headerText}>{communityName}</Text>
                   </TouchableOpacity>
                 </>
-              )}
+              ) : null}
             </View>
 
             <Text style={styles.headerTextTime}>
@@ -563,7 +563,7 @@ export default function PostList({
         </View>
 
         {likeReaction === 0 && commentsCount === 0 ? (
-          ''
+          <Text>''</Text>
         ) : (
           <TouchableWithoutFeedback onPress={() => onClickComment()}>
             <View style={styles.countSection}>
