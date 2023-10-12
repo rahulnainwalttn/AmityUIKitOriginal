@@ -9,6 +9,7 @@ export interface IAmityUIkitProvider {
   apiRegion?: string;
   apiEndpoint?: string;
   children: any;
+  authToken: string;
 }
 export default function AmityUiKitProvider({
   userId,
@@ -17,15 +18,16 @@ export default function AmityUiKitProvider({
   apiRegion,
   apiEndpoint,
   children,
+  authToken,
 }: IAmityUIkitProvider) {
   return (
-
     <AuthContextProvider
       userId={userId}
       displayName={displayName || userId}
       apiKey={apiKey}
       apiRegion={apiRegion}
       apiEndpoint={apiEndpoint}
+      authToken={authToken}
     >
       {children}
     </AuthContextProvider>
