@@ -22,6 +22,9 @@ export const AuthContextProvider: FC<IAmityUIkitProvider> = ({
   apiEndpoint,
   children,
   authToken,
+  performLogIn,
+  onSuccessCb,
+  onErrorCb,
 }: IAmityUIkitProvider) => {
   const [error, setError] = useState('');
   const [isConnecting, setLoading] = useState(false);
@@ -48,8 +51,14 @@ export const AuthContextProvider: FC<IAmityUIkitProvider> = ({
   }, []);
 
   useEffect(() => {
+    const isNeedToLoggIn =
+      sessionState === 'notLoggedIn' ||
+      sessionState === 'tokenExpired' ||
+      sessionState === 'terminated';
     if (sessionState === 'established') {
       setIsConnected(true);
+    } else if (isNeedToLoggIn) {
+      performLogIn();
     }
   }, [sessionState]);
 
@@ -73,10 +82,11 @@ export const AuthContextProvider: FC<IAmityUIkitProvider> = ({
     setLoading(true);
     try {
       handleConnect();
+      onSuccessCb?.();
     } catch (e) {
       const errorText =
         (e as Error)?.message ?? 'Error while handling request!';
-
+      onErrorCb?.(Error);
       setError(errorText);
       throw error;
     } finally {

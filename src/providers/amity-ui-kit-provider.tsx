@@ -10,6 +10,9 @@ export interface IAmityUIkitProvider {
   apiEndpoint?: string;
   children: any;
   authToken: string;
+  performLogIn: () => {};
+  onSuccessCb: () => {};
+  onErrorCb: () => {};
 }
 export default function AmityUiKitProvider({
   userId,
@@ -19,6 +22,9 @@ export default function AmityUiKitProvider({
   apiEndpoint,
   children,
   authToken,
+  performLogIn = () => {},
+  onSuccessCb = () => {},
+  onErrorCb = () => {},
 }: IAmityUIkitProvider) {
   return (
     <AuthContextProvider
@@ -28,6 +34,9 @@ export default function AmityUiKitProvider({
       apiRegion={apiRegion}
       apiEndpoint={apiEndpoint}
       authToken={authToken}
+      performLogIn={performLogIn}
+      onSuccessCb={onSuccessCb}
+      onErrorCb={onErrorCb}
     >
       {children}
     </AuthContextProvider>
